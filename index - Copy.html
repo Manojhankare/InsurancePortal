@@ -1,0 +1,291 @@
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Policy Management</title>
+      <style>
+         body {
+         font-family: Arial, sans-serif;
+         margin: 20px;
+         padding: 0;
+         background-color: #f9f9f9;
+         }
+         header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 10px;
+         background-color: #007bff;
+         color: #fff;
+         }
+         header h1 {
+         margin: 0;
+         }
+         header button {
+         padding: 8px 16px;
+         background-color: #fff;
+         color: #007bff;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         header button:hover {
+         background-color: #e9e9e9;
+         }
+         table {
+         width: 100%;
+         border-collapse: collapse;
+         margin: 20px 0;
+         background-color: #fff;
+         }
+         th,
+         td {
+         padding: 10px;
+         border: 1px solid #ddd;
+         text-align: left;
+         }
+         th {
+         background-color: #f4f4f4;
+         }
+         tr:nth-child(even) {
+         background-color: #f9f9f9;
+         }
+         tr:hover {
+         background-color: #f1f1f1;
+         }
+         form {
+         display: none;
+         margin: 20px 0;
+         background: #fff;
+         padding: 20px;
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         }
+         form h2 {
+         margin: 0 0 10px;
+         }
+         form .form-group {
+         margin-bottom: 15px;
+         }
+         form .form-group label {
+         display: block;
+         margin-bottom: 5px;
+         }
+         form .form-group input,
+         form .form-group select {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ddd;
+         border-radius: 4px;
+         }
+         form button {
+         padding: 8px 16px;
+         background-color: #007bff;
+         color: #fff;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         form button:hover {
+         background-color: #0056b3;
+         }
+      </style>
+   </head>
+   <body>
+      <header>
+         <h1>Policy Management</h1>
+         <button id="addPolicyButton">Add New Policy</button>
+      </header>
+      <table>
+         <thead>
+            <tr>
+               <th>Policy ID</th>
+               <th>Policy No</th>
+               <th>Policy Type</th>
+               <th>Name</th>
+               <th>Email</th>
+               <th>Mobile</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody id="policyList">
+            <!-- Data will be populated dynamically -->
+         </tbody>
+      </table>
+      <form id="policyForm">
+         <h2>Add New Policy</h2>
+         <div class="form-group">
+            <label for="policyType">Policy Type</label>
+            %invoke InsuranceAPI.services:GetPoliciesList%
+            <select id="policyType" required>
+              %loop getPoliciesOutput/results%
+               <option value=%POLICY_NAME%>%value POLICY_NAME%</option>
+               %endloop%
+            </select>
+            %endinvoke%
+         </div>
+         <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter name" required />
+         </div>
+         <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email" required />
+         </div>
+         <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="text" id="mobile" placeholder="Enter mobile number" required />
+         </div>
+         <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" required />
+         </div>
+         <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+               <option value="Male">Male</option>
+               <option value="Female">Female</option>
+               <option value="Other">Other</option>
+            </select>
+         </div>
+         <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="Enter address" required />
+         </div>
+         <div class="form-group">
+            <label for="nominee">Nominee</label>
+            <input type="text" id="nominee" placeholder="Enter nominee name" required />
+         </div>
+         <div class="form-group">
+            <label for="fromDate">From Date</label>
+            <input type="date" id="fromDate" required />
+         </div>
+         <div class="form-group">
+            <label for="toDate">To Date</label>
+            <input type="date" id="toDate" required />
+         </div>
+         <div class="form-group">
+            <label for="aadhar">Aadhar Number</label>
+            <input type="text" id="aadhar" placeholder="Enter Aadhar number" required />
+         </div>
+         <div class="form-group">
+            <label for="chassis">Chassis Number</label>
+            <input type="text" id="chassis" placeholder="Enter chassis number" required />
+         </div>
+         <div class="form-group">
+            <label for="vehicleType">Vehicle Type</label>
+            <input type="text" id="vehicleType" placeholder="Enter vehicle type" required />
+         </div>
+         <div class="form-group">
+            <label for="vehicleAdditionalInfo">Vehicle Additional Info</label>
+            <input type="text" id="vehicleAdditionalInfo" placeholder="Enter vehicle additional info" required />
+         </div>
+         <button type="submit">Submit</button>
+      </form>
+      <script>
+         const policyListEndpoint = "http://localhost:5555/restv2/insurance/getpolicieslist";
+         const insertEndpoints = {
+           vehicle: "http://localhost:5555/restv2/policyapis/insertvehicle",
+           life: "http://localhost:5555/restv2/policyapis/insertlife",
+           travel: "http://localhost:5555/restv2/policyapis/inserttravel"
+         };
+         
+         // Function to fetch and display policies
+         async function fetchPolicies() {
+           try {
+             const response = await fetch(policyListEndpoint);
+             const data = await response.json();
+             const policies = data.getAllPoliciesOutput.results || [];
+             const policyList = document.getElementById("policyList");
+             policyList.innerHTML = "";
+         
+             policies.forEach(policy => {
+               const row = document.createElement("tr");
+               row.innerHTML = `
+         <td>${policy.POLICY_ID}</td>
+         <td>${policy.POLICY_NO}</td>
+         <td>${policy.POLICY_TYPE}</td>
+         <td>${policy.NAME}</td>
+         <td>${policy.EMAIL}</td>
+         <td>${policy.MOBILE}</td>
+         <td>
+         <button>Delete</button>
+         </td>
+               `;
+               policyList.appendChild(row);
+             });
+           } catch (error) {
+             console.error("Error fetching policies:", error);
+           }
+         }
+         
+         // Show the form to add a new policy
+         document.getElementById("addPolicyButton").addEventListener("click", () => {
+           const form = document.getElementById("policyForm");
+           form.style.display = form.style.display === "none" ? "block" : "none";
+         });
+         
+         // Handle form submission
+         document.getElementById("policyForm").addEventListener("submit", async (e) => {
+           e.preventDefault();
+         
+           const policyType = document.getElementById("policyType").value;
+           const name = document.getElementById("name").value;
+           const email = document.getElementById("email").value;
+           const mobile = document.getElementById("mobile").value;
+           const dob = document.getElementById("dob").value;
+           const gender = document.getElementById("gender").value;
+           const address = document.getElementById("address").value;
+           const nominee = document.getElementById("nominee").value;
+           const fromDate = document.getElementById("fromDate").value;
+           const toDate = document.getElementById("toDate").value;
+           const aadhar = document.getElementById("aadhar").value;
+           const chassis = document.getElementById("chassis").value;
+           const vehicleType = document.getElementById("vehicleType").value;
+           const vehicleAdditionalInfo = document.getElementById("vehicleAdditionalInfo").value;
+         
+           const policyData = {
+             input: {
+               NAME: name,
+               EMAIL: email,
+               MOBILE: mobile,
+               DOB: dob,
+               GENDER: gender,
+               ADDRESS: address,
+               NOMINEE: nominee,
+               FROM_DATE: fromDate,
+               TO_DATE: toDate,
+               AADHAR: aadhar,
+               CHASSIS: chassis,
+               VEHICLE_TYPE: vehicleType,
+               VEHICLE_ADDITIONAL_INFO: vehicleAdditionalInfo
+             }
+           };
+         
+           try {
+             const response = await fetch(insertEndpoints[policyType], {
+               method: "POST",
+               headers: {
+                 "Content-Type": "application/json"
+               },
+               body: JSON.stringify(policyData)
+             });
+         
+             if (response.ok) {
+               alert("Policy added successfully!");
+               document.getElementById("policyForm").reset();
+               document.getElementById("policyForm").style.display = "none";
+               fetchPolicies();  // Refresh the policy list
+             } else {
+               alert("Failed to add policy.");
+             }
+           } catch (error) {
+             console.error("Error inserting policy:", error);
+           }
+         });
+         
+         // Initial fetch to load policies on page load
+         fetchPolicies();
+      </script>
+   </body>
+</html>

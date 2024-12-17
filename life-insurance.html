@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Insurance Policies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+         <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Insurance Portal</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="life-insurance.html">Life Insurance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="vehicle-insurance.html">Vehicle Insurance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="travel-insurance.html">Travel Insurance</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="quotations.html">Quotations List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    <!-- Sidebar (left navigation) -->
+    <div class="sidenav">
+        <div class="logo">
+            <img src="https://vkraftsoftware.com/wp-content/uploads/2024/04/SL-1-e1716322515453.png" alt="Logo"> <!-- Logo URL -->
+        </div>
+
+        <a href="index.html">Home</a>
+        <a href="life-insurance.html">Life Insurance</a>
+        <a href="vehicle-insurance.html">Vehicle Insurance</a>
+        <a href="travel-insurance.html">Travel Insurance</a>
+        <a href="about-us.html">About Us</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="main-content">
+    
+        <div class="container mt-5">
+            <h1 class="mb-4">Life Insurance Policies</h1>
+            
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <!-- Button to open the Add Life Insurance modal -->
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPolicyModal">Add New Life Insurance Policy</button>
+                </div>
+                <div>
+                    <!-- Search by Policy No -->
+                    <input type="text" id="policyNoSearch" class="form-control" placeholder="Search by Policy No" style="width: 250px; display: inline-block;">
+                    <button class="btn btn-primary" id="searchPolicyBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    
+                    <!-- Clear Button for Policy No -->
+                    <button class="btn btn-secondary" id="clearSearchBtn">
+                        <i class="fas fa-times-circle"></i> Clear
+                    </button>
+                    
+                    <!-- Search by Email -->
+                    <input type="text" id="emailSearch" class="form-control" placeholder="Search by Email" style="width: 250px; display: inline-block;">
+                    <button class="btn btn-info" id="searchEmailBtn">
+                        <i class="fas fa-envelope"></i> Search Email
+                    </button>
+                    
+                    <!-- Clear Button for Email -->
+                    <button class="btn btn-secondary" id="clearEmailSearchBtn">
+                        <i class="fas fa-times-circle"></i> Clear Email
+                    </button>
+                </div>
+            </div>                 
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Policy No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Nominee</th>
+                        <th>Premium</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>DOB</th>
+                        <th>Additional Info</th>
+                    </tr>
+                </thead>
+                <tbody id="policyList">
+                    <!-- Policy List will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div id="pagination" class="d-flex justify-content-center mt-4">
+            <button id="prevPage" class="btn btn-primary" disabled>Previous</button>
+            <span id="pageInfo" class="mx-3">Page 1</span>
+            <button id="nextPage" class="btn btn-primary">Next</button>
+        </div>
+    </div>
+    <!-- Add Policy Modal -->
+    <div class="modal fade" id="addPolicyModal" tabindex="-1" aria-labelledby="addPolicyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Add the modal-lg class to stretch the modal horizontally -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPolicyModalLabel" style="color: black;">Add New Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: #f8f9fa;">
+                    <form id="lifeInsuranceForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label text-dark">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
+                                <div class="invalid-feedback">Name is required.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label text-dark">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+                                <div class="invalid-feedback">Enter a valid email address.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="mobile" class="form-label text-dark">Mobile Number</label>
+                                <input type="text" class="form-control" id="mobile" placeholder="Enter Mobile Number" pattern="^\+91[6789][0-9]{9}$" required>
+                                <div class="invalid-feedback">Enter a valid 10-digit mobile number.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="statuss" class="form-label text-dark">Status</label>
+                                <select class="form-select" id="statuss" required>
+                                    <option value="" selected>Choose Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Expired">Expired</option>
+                                    <option value="Pending">Pending</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a status.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="gender" class="form-label text-dark">Gender</label>
+                                <select class="form-select" id="gender" required>
+                                    <option value="" selected>Choose Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a Gender.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nominee" class="form-label text-dark">Nominee Name</label>
+                                <input type="text" class="form-control" id="nominee" placeholder="Enter Nominee Details" required>
+                                <div class="invalid-feedback">Nominee is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fromDate" class="form-label text-dark">From Date</label>
+                                <input type="date" class="form-control" id="fromDate" required>
+                                <div class="invalid-feedback">From Date is required.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="toDate" class="form-label text-dark">To Date</label>
+                                <input type="date" class="form-control" id="toDate" required>
+                                <div class="invalid-feedback">To Date is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="dob" class="form-label text-dark">DOB</label>
+                                <input type="date" class="form-control" id="dob" required>
+                                <div class="invalid-feedback">DOB is required.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="aadhar" class="form-label text-dark">Aadhar Number</label>
+                                <input type="text" class="form-control" id="aadhar" placeholder="Enter Aadhar Number" pattern="^\d{12}$" required>
+                                <div class="invalid-feedback">Enter a valid 12-digit Aadhar number.</div>
+                            </div>
+                        </div>
+
+                        <!-- Premium field added here -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="premium" class="form-label text-dark">Premium</label>
+                                <input type="number" class="form-control" id="premium" placeholder="Enter Premium Amount" min="1" required>
+                                <div class="invalid-feedback">Premium amount is required.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="policyType" class="form-label text-dark">Policy Type</label>
+                                <select class="form-select" id="policyType" disabled>
+                                    <option value="Life Insurance" selected>Life Insurance</option>
+                                </select>
+                                <div class="invalid-feedback">Policy Type is set as "Life Insurance".</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="additional_info" class="form-label text-dark">Additional Info</label>
+                            <textarea class="form-control" id="additional_info" placeholder="Enter Additional Info"></textarea>
+                        </div>
+
+                        <!-- Buttons Row -->
+                        <!-- Buttons Row -->
+                        <div class="d-flex justify-content-center">
+                            <button type="reset" class="btn btn-secondary mx-2">Reset</button>
+                            <button type="submit" class="btn btn-success mx-2">Add Policy</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="life-insurance.js"></script>
+    <script>
+        // Set the max date for DOB input to today's date
+        const dobField = document.getElementById('dob');
+        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        dobField.setAttribute('max', today);
+    </script>
+    
+</body>
+</html>

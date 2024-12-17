@@ -1,0 +1,144 @@
+/* General body and background styling */
+body {
+  background: url('background-image1.png') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  margin: 0;
+  padding: 0;
+  position: relative; /* Changed to relative for better layout control */
+}
+
+/* Sidebar Style with transparent background */
+.sidenav {
+  position: fixed;
+  top: 60px; /* Adjust this value based on navbar height */
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  background-color: rgba(127, 171, 214, 0.8); /* Transparent blue (adjust the alpha as needed) */
+  color: #fff;
+  padding-top: 20px;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100; /* Ensure the sidebar stays on top */
+  height: 100vh; /* Full height */
+}
+
+.sidenav .logo {
+  width: 100%;
+  padding: 20px 0; /* Adjust the padding around the logo */
+  text-align: center;
+}
+
+.sidenav .logo img {
+  max-width: 80%; /* Adjust logo size */
+  height: auto;
+  max-height: 100px; /* Set a maximum height for the logo */
+  object-fit: contain; /* Ensure the image retains its aspect ratio */
+}
+
+.sidenav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 0;
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.sidenav a:hover {
+  background-color: #020406;
+  border-radius: 5px;
+}
+
+/* Navbar Style with transparent background */
+.navbar.fixed-top {
+  background-color: rgba(47, 96, 108, 0.8); /* Transparent black (adjust the alpha as needed) */
+  color: white;
+  z-index: 100; /* Ensure navbar stays on top of content */
+  padding: 10px 20px;
+}
+
+/* Content area */
+.main-content {
+  margin-left: 200px; /* Adjust the margin to match the sidebar width */
+  padding-top: 14px; /* Push content below the navbar */
+  padding-right: 20px; /* Optional: Add padding to the right side of content */
+}
+
+table {
+  width: 100%;
+}
+
+/* Table adjustments */
+.table {
+  width: 90%; /* Make table a little smaller */
+  margin-left: 1%; /* Shift table slightly to the left */
+  background-color: rgba(255, 255, 255, 0.7); /* Optional: Add a slight background to the table */
+  border-radius: 8px;
+}
+
+/* Button styles */
+button.btn {
+  max-width: 100%;   /* Prevent it from stretching beyond the container */
+  width: auto;       /* Allow it to size itself properly */
+  padding: 10px 20px; /* Adjust padding as necessary */
+}
+
+.modal-footer .btn {
+  width: auto; /* Ensure buttons don't stretch */
+  padding: 10px 20px; /* Adjust padding */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+/* Pagination */
+#pagination button {
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+#pagination {
+  margin-top: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0; /* Remove left margin when the screen size is small */
+  }
+
+  .sidenav {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+
+  .sidenav.active {
+    display: block;
+  }
+
+  .sidebar-toggle-btn {
+    display: inline-block;
+    margin-left: 10px;
+    background-color: #2e4154;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .table {
+    width: 100%; /* On small screens, make the table full width */
+    margin-left: 0;
+  }
+
+  .navbar.fixed-top {
+    position: relative;
+  }
+}

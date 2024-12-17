@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Insurance Quotations</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        /* Add a transparent background to the cards */
+        .card {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Light border */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .card:hover {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly less transparent on hover */
+        }
+
+        /* Adjust card text color to ensure readability on transparent background */
+        .card-body {
+            color: #333; /* Dark text for contrast */
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555; /* Slightly lighter text for better readability */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark  fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Insurance Portal</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="life-insurance.html">Life Insurance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="vehicle-insurance.html">Vehicle Insurance</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="travel-insurance.html">Travel Insurance</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="quotations.html">Quotations List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h6class="mb-4"> &nbsp;</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Get Insurance Quotations</h1>
+        
+        <!-- Dropdown for selecting Insurance Type -->
+<!-- Dropdown for selecting Insurance Type -->
+<div class="mb-4 d-flex align-items-center">
+    <label for="insuranceType" class="form-label mb-0 me-3">Select Insurance Type</label>
+    <select class="form-select form-select-sm w-auto" id="insuranceType">
+        <option value="Travel">Travel Insurance</option>
+        <option value="Vehicle">Vehicle Insurance</option>
+        <option value="Life">Life Insurance</option>
+    </select>
+</div>
+
+
+
+        <!-- Display Quotations -->
+        <div class="row" id="quotations-list"></div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="text-center" style="display:none;">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    
+    <!-- Link to quotations.js -->
+    <script src="quotations.js"></script>
+</body>
+</html>
