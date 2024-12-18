@@ -43,7 +43,7 @@ window.onload = function () {
                     <td>${policy.STATUS}</td>
                     <td>${policy.PREMIUM}</td>
                     <td>${policy.VEHICLE_NO}</td>
-                    <td>${policy.CHASIS}</td>
+                    <td>${policy.CHASSIS}</td>
                     <td>${policy.VEHICLE_TYPE}</td>
                     <td>${policy.FROM_DATE}</td>
                     <td>${policy.TO_DATE}</td>
@@ -60,9 +60,27 @@ window.onload = function () {
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
+    // Function to validate and format the Policy No input (only allow numbers after "VI-")
+    function validatePolicyNo() {
+        const input = document.getElementById('policyNoSearch');
+        let value = input.value;
+
+        // Make sure the input always starts with "VI-"
+        if (!value.startsWith('VI-')) {
+            input.value = 'VI-';
+        } else {
+            // Allow only numbers after the "VI-" part
+            const numericPart = value.slice(3).replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            input.value = 'VI-' + numericPart; // Reassign the value back to the input
+        }
+    }
 
     // Function to search policies by Policy No
     function searchPolicyByNo(policyNo) {
+        if (!policyNo.startsWith('VI-') || policyNo.length <= 3) {
+            alert('Please enter a valid policy number starting with "VI-" followed by digits.');
+            return;
+        }
         fetch(`http://localhost:5555/restv2/insurance/searchbypolicyno?input=${policyNo}`, {
             method: 'GET',
             headers: {
@@ -88,7 +106,7 @@ window.onload = function () {
                         <td>${policy.STATUS}</td>
                         <td>${policy.PREMIUM}</td>
                         <td>${policy.VEHICLE_NO}</td>
-                        <td>${policy.CHASIS}</td>
+                        <td>${policy.CHASSIS}</td>
                         <td>${policy.VEHICLE_TYPE}</td>
                         <td>${policy.FROM_DATE}</td>
                         <td>${policy.TO_DATE}</td>
@@ -162,6 +180,7 @@ window.onload = function () {
     });
 
     // Form Submission for New Policy
+    // Form Submission for New Policy
     document.getElementById('vehicleInsuranceForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -170,20 +189,20 @@ window.onload = function () {
         const email = document.getElementById('email').value.trim();
         const mobile = document.getElementById('mobile').value.trim();
         const dob = document.getElementById('dob').value.trim();
-        const gender = document.getElementById('gender')?.value || 'Not Provided';
-        const address = document.getElementById('address')?.value || 'Not Provided';
+        const gender = document.getElementById('gender')?.value || 'Not Provided'; // Optional field
+        const address = document.getElementById('address')?.value || 'Not Provided'; // Optional field
         const status = document.getElementById('statuss').value;
         const premium = document.getElementById('premium').value;
-        const vehicle_no = document.getElementById('vehicle_no').value;
-        const chasis = document.getElementById('chasis').value;
+        const vehicle_no = document.getElementById('vehicle_no').value.trim();
+        const chassis = document.getElementById('chassis').value.trim();
         const vehicle_type = document.getElementById('vehicle_type').value;
         const fromDate = document.getElementById('fromDate').value.trim();
         const toDate = document.getElementById('toDate').value.trim();
         const aadhar = document.getElementById('aadhar').value.trim();
-        const additionalInfo = document.getElementById('additional_info').value.trim();
+        const additionalInfo = document.getElementById('additional_info').value.trim(); // Optional field
 
-        // Validation checks (you can add more checks as necessary)
-        if (!name || !email || !premium || !fromDate || !toDate || !dob || !status || !nominee) {
+        // Validation checks (check if required fields are filled)
+        if (!name || !email || !mobile || !dob || !status || !premium || !vehicle_no || !chassis || !vehicle_type || !fromDate || !toDate || !aadhar) {
             alert('Please fill all required fields.');
             return;
         }
@@ -198,8 +217,9 @@ window.onload = function () {
             "GENDER": gender,
             "ADDRESS": address,
             "STATUS": status,
-            "VEHICle_NO": vehicle_no,
-            "CHASIS": chasis,
+            "VEHICLE_NO": vehicle_no,
+            "NOMINEE": "Self",
+            "CHASSIS": chassis,
             "VEHICLE_TYPE": vehicle_type,
             "PREMIUM": premium,
             "FROM_DATE": fromDate,

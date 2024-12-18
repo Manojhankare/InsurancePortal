@@ -21,15 +21,15 @@
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="life-insurance.html">Life Insurance</a>
+                            <a class="nav-link" href="life-insurance.html">Life Insurance</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="vehicle-insurance.html">Vehicle Insurance</a>
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="vehicle-insurance.html">Vehicle Insurance</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="travel-insurance.html">Travel Insurance</a>
                         </li>                        
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="quotations.html">Quotations List</a>
                         </li>
                     </ul>
@@ -59,11 +59,10 @@
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPolicyModal">Add New Vehicle Policy</button>
                 </div>
                 <div>
-                    <input type="text" id="policyNoSearch" class="form-control" placeholder="Search by Policy No" style="width: 250px; display: inline-block;">
+                    <input type="text" id="policyNoSearch" class="form-control" placeholder="Search by Policy No" style="width: 250px; display: inline-block;" value="VI-" oninput="validatePolicyNo()">
                     <button class="btn btn-primary" id="searchPolicyBtn">
                         <i class="fas fa-search"></i> Search
-                    </button>
-                    
+                    </button>                                    
                     <button class="btn btn-secondary" id="clearSearchBtn">
                         <i class="fas fa-times-circle"></i> Clear
                     </button>
@@ -88,7 +87,7 @@
                         <th>Status</th>
                         <th>Premium</th>
                         <th>Vehicle No.</th>
-                        <th>Chasis No.</th>
+                        <th>Chassis No.</th>
                         <th>Vehicle Type</th>
                         <th>From Date</th>
                         <th>To Date</th>
@@ -138,9 +137,9 @@
 
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label for="chasis" class="form-label text-dark">Chasis No.</label>
-                                <input type="text" class="form-control" id="chasis" placeholder="Enter Chasis Details" required>
-                                <div class="invalid-feedback">Chasis No. is required.</div>
+                                <label for="chassis" class="form-label text-dark">Chassis No.</label>
+                                <input type="text" class="form-control" id="chassis" placeholder="Enter Chassis Details" required>
+                                <div class="invalid-feedback">Chassis No. is required.</div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="vehicle_no" class="form-label text-dark">Vehicle No.</label>

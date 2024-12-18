@@ -60,8 +60,28 @@ window.onload = function () {
         .catch((error) => console.error('Error fetching data:', error));
     }
 
+    // Function to validate and format the Policy No input (only allow numbers after "LI-")
+    function validatePolicyNo() {
+        const input = document.getElementById('policyNoSearch');
+        let value = input.value;
+
+        // Make sure the input always starts with "LI-"
+        if (!value.startsWith('LI-')) {
+            input.value = 'LI-';
+        } else {
+            // Allow only numbers after the "LI-" part
+            const numericPart = value.slice(3).replace(/[^0-9]/g, ''); // Remove non-numeric characters
+            input.value = 'LI-' + numericPart; // Reassign the value back to the input
+        }
+    }
+
     // Function to search policies by Policy No
     function searchPolicyByNo(policyNo) {
+        if (!policyNo.startsWith('LI-') || policyNo.length <= 3) {
+            alert('Please enter a valid policy number starting with "LI-" followed by digits.');
+            return;
+        }
+
         fetch(`http://localhost:5555/restv2/insurance/searchbypolicyno?input=${policyNo}`, {
             method: 'GET',
             headers: {
